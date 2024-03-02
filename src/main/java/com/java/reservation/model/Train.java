@@ -1,4 +1,4 @@
-package com.java.reservation.entity;
+package com.java.reservation.model;
 
 import org.hibernate.annotations.GenericGenerator;
 
@@ -10,14 +10,16 @@ import lombok.Data;
 
 @Data
 @Entity
-public class Admin {
+public class Train {
     @Id
-    @Column(name = "id")
+    @Column(name ="id")
     @GeneratedValue(generator = "uuid")
     @GenericGenerator(name = "uuid", strategy = "org.hibernate.id.UUIDGenerator")
-    private String firstName;
-    private String lastName;
-    private String password;
-    private String mailId;
-    private Long phoneNumber;
+    private String id; 
+    private String trainNumber;
+    private String trainName;
+    private String fromStation;
+    private String toStation;
+    private Integer seats;
+    private Double fare;
 }

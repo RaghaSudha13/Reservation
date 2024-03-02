@@ -1,4 +1,6 @@
-package com.java.reservation.entity;
+package com.java.reservation.model;
+
+import java.util.Date;
 
 import org.hibernate.annotations.GenericGenerator;
 
@@ -8,18 +10,20 @@ import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.Id;
 import lombok.Data;
 
-@Data
+//if we use serializable means it converting  the objects into byte stream
 @Entity
-public class User {
+@Data
+public class Booking {
     @Id
-    @Column(name ="id")
+    @Column(name = "id")
     @GeneratedValue(generator = "uuid")
     @GenericGenerator(name = "uuid", strategy = "org.hibernate.id.UUIDGenerator")
     private String id;
-    private String firstName;
-    private String lastName;
-    private String password;
-    private String address;
     private String mailId;
-    private Long phoneNumber;  
+    private String trainNumber;
+    private Date date;
+    private String fromStation;
+    private String toStation;
+    private Integer seats;
+    private Double amount;
 }
