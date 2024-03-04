@@ -7,5 +7,7 @@ import com.java.reservation.dto.AdminRegisterDTO;
 public interface AdminService {
 
     void registerAdmin(AdminRegisterDTO adminRegisterDTO);
+
+    String verifyOtp(String mailId, String otp);
     
 }

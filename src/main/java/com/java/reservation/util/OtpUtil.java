@@ -11,6 +11,9 @@ public class OtpUtil {
         return otp.substring(otp.length() -4);
     }
 
+}
+
+
     // private static final int OTP_Length = 4;
 
     // public static String generateOtp() {
@@ -22,4 +25,3 @@ public class OtpUtil {
     // return otp.toString();
 
     // }
-}

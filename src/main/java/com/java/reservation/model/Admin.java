@@ -20,5 +20,6 @@ public class Admin {
     private String password;
     private String mailId;
     private Long phoneNumber;
+    @Column(name ="otp")
     private String otp;
 }

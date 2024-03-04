@@ -9,5 +9,7 @@ import com.java.reservation.model.Admin;
 public interface AdminRepository extends JpaRepository<Admin, String>{
 
     boolean existsByMailId(String mailId);
+
+    Admin findByMailId(String email);
     
 }
