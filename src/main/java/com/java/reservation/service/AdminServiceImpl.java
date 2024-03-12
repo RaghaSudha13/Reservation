@@ -1,18 +1,22 @@
 package com.java.reservation.service;
 
-import javax.management.RuntimeErrorException;
+
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.java.reservation.dto.AdminLoginDTO;
 import com.java.reservation.dto.AdminRegisterDTO;
+
 import com.java.reservation.exception.AdminRegistrationException;
 import com.java.reservation.model.Admin;
 import com.java.reservation.repository.AdminRepository;
 import com.java.reservation.util.EmailUtil;
 import com.java.reservation.util.OtpUtil;
+
+import jakarta.servlet.http.HttpSession;
 
 @Service
 public class AdminServiceImpl implements AdminService {
@@ -57,13 +61,34 @@ public class AdminServiceImpl implements AdminService {
     }
 
     @Override
-public String verifyOtp(String mailId, String otp) {
-    Admin admin = adminRepository.findByMailId(mailId);
-    if (admin != null && admin.getOtp() != null && admin.getOtp().equals(otp)) {
-        return "OTP Verified Successfully";
-    } else {
-        return "Invalid OTP";
+    public String verifyOtp(String mailId, String otp) {
+        Admin admin = adminRepository.findByMailId(mailId);
+        if (admin != null && admin.getOtp() != null && admin.getOtp().equals(otp)) {
+            return "OTP Verified Successfully";
+        } else {
+            return "Invalid OTP";
+        }
     }
-}
+
+    @Override
+    public String login(AdminLoginDTO adminLoginDTO) {
+        Admin admin = adminRepository.findByMailId(adminLoginDTO.getMailId());
+
+        if (admin == null) {
+            return "Admin not found with this email: " + adminLoginDTO.getMailId();
+        }
+
+        if (!admin.getPassword().equals(adminLoginDTO.getPassword())) {
+            return "Password is incorrect";
+        }
+        return "Admin Login Successfully";
+    }
+
+    @Override
+    public String logout(HttpSession session) {
+        session.invalidate();   
+        return "logged out succesfully"; 
+    }
+
 
 }

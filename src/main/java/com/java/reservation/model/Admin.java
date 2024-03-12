@@ -15,6 +15,7 @@ public class Admin {
     @Column(name = "id")
     @GeneratedValue(generator = "uuid")
     @GenericGenerator(name = "uuid", strategy = "org.hibernate.id.UUIDGenerator")
+    private String id;
     private String firstName;
     private String lastName;
     private String password;

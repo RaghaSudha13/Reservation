@@ -8,7 +8,7 @@ import org.springframework.stereotype.Component;
 public class OtpUtil {
     public String generateOtp() {
         String otp = UUID.randomUUID().toString().replace("-","");
-        return otp.substring(otp.length() -4);
+        return otp.substring(otp.length() -6);
     }
 
 }

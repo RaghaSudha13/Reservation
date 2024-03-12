@@ -11,9 +11,14 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.java.reservation.dto.AdminLoginDTO;
 import com.java.reservation.dto.AdminRegisterDTO;
+import com.java.reservation.exception.AdminLoginException;
 import com.java.reservation.exception.AdminRegistrationException;
+import com.java.reservation.model.Train;
 import com.java.reservation.service.AdminService;
+
+import jakarta.servlet.http.HttpSession;
 
 @RequestMapping("/r1")
 @RestController
@@ -37,13 +42,44 @@ public class AdminController {
     }
 
     @PostMapping("/verify-OTP")
-public ResponseEntity<String> verifyOtp(@RequestParam String mailId, @RequestParam String otp) {
-    try {
-        String message = adminService.verifyOtp(mailId, otp);
-        return ResponseEntity.ok(message);
-    } catch (AdminRegistrationException e) {
-        return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(e.getMessage());
+    public ResponseEntity<String> verifyOtp(@RequestParam String mailId, @RequestParam String otp) {
+        try {
+            String message = adminService.verifyOtp(mailId, otp);
+            return ResponseEntity.ok(message);
+        } catch (AdminRegistrationException e) {
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(e.getMessage());
+        }
     }
-}
+
+    @PostMapping("/adminLogin")
+    public ResponseEntity<String> login(@RequestBody AdminLoginDTO adminLoginDTO){
+        try{
+          String loginStatus =  adminService.login(adminLoginDTO);
+            return ResponseEntity.ok(loginStatus);
+        }catch(AdminLoginException e){
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(e.getMessage());
+        }
+    }
+
+    @PostMapping("logout")
+    public ResponseEntity<String> logout(HttpSession session){
+        try{
+          String status= adminService.logout(session);
+            return ResponseEntity.ok(status);
+        }catch(Exception e){
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(e.getMessage());
+        }
+
+    }
+
+    @PostMapping("adminLogout")
+    public ResponseEntity<String> adminLogout(HttpSession session){
+        try{
+            session.invalidate();
+            return ResponseEntity.ok("logeed out Successfully");
+        }catch(Exception e){
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(e.getMessage());
+        }
+    }
 
 }
